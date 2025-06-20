@@ -43,7 +43,7 @@
       <td>{{ recipe.recipe_description }}</td>
       <td><img src="{{ recipe.recipe_image.url }}" alt="{{ recipe.recipe_name }}" height="80" width="150"></td>
       <td>
-        <a href="{% url 'delete_recipe' recipe.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+        <a href="{% url 'delete_recipe' recipe.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">🗑️</a>
         <a href="{% url 'update_recipe' recipe.id %}" class="mt-2 btn btn-primary btn-sm">Edit</a>
       </td>
     </tr>
