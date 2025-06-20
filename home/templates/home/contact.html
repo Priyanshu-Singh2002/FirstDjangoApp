@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block start %}
+<nav>
+    <a href="/">Home</a>
+    <a href="/about/">About</a>
+</nav>
+
+
+<h1>Contact Us</h1>
+<p>If you have any questions or feedback, please feel free to reach out to any of us.</p>
+
+<hr>
+<div>Below Employee Details :- </div>
+
+<table class="container">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>Phone</th>
+    </tr>
+    {% for person in peoples %}
+    <tr>
+        <td>{{person.name}}</td>
+        <td>{{person.email}}</td>
+        <td>{{person.age}}</td>
+        <td {% if person.age >= 18 %} style="background: lightgreen;" {% else %} style="background: red;" {% endif %}>
+        {% if person.age >= 18 %} 👍 {% else %} 👎{% endif %}
+        </td>
+        <td>{{person.phone}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock start %}
