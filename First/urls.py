@@ -29,6 +29,8 @@ urlpatterns = [
     path('about/',about, name = 'about'),
     path('contact/',contact,name='contact'),
     path('recipe/',add_recipe, name='add_recipe'),
+    path('recipe/delete/<int:id>/',delete_recipe, name='delete_recipe'),
+    path('recipe/update/<int:id>/', update_recipe, name='update_recipe'),
 ]
 
 if settings.DEBUG:

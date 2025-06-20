@@ -3,7 +3,7 @@
 {% block start %}
 
 <div class="container mt-4">
-    <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+    <form class="col-6 mx-auto card p-3" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <h2 class="text-center">Add Recipe</h2>
         <hr>
@@ -23,13 +23,16 @@
     </form>
 
     <hr>
+    <h3 class="text-center">Recipe List</h3>
+
     <table class="table">
   <thead>
-    <tr>
-      <th scope="col">S.No</th>
-      <th scope="col">Recipe Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Image</th>
+    <tr class="table-dark">
+      <th class="text-center" scope="col">S.No</th>
+      <th class="text-center" scope="col">Recipe Name</th>
+      <th class="text-center" scope="col">Description</th>
+      <th class="text-center" scope="col">Image</th>
+      <th class="text-center" scope="col">Function</th>
     </tr>
   </thead>
   <tbody>
@@ -38,7 +41,11 @@
       <th scope="row">{{ forloop.counter }}</th>
       <td>{{ recipe.recipe_name }}</td>
       <td>{{ recipe.recipe_description }}</td>
-      <td><img src="{{ recipe.recipe_image.url }}" alt="{{ recipe.recipe_name }}" height="100" width="150"></td>
+      <td><img src="{{ recipe.recipe_image.url }}" alt="{{ recipe.recipe_name }}" height="80" width="150"></td>
+      <td>
+        <a href="{% url 'delete_recipe' recipe.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+        <a href="{% url 'update_recipe' recipe.id %}" class="mt-2 btn btn-primary btn-sm">Edit</a>
+      </td>
     </tr>
     {% endfor %}    
   </tbody>
