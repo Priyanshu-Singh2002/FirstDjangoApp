@@ -18,12 +18,17 @@ def add_recipe(request):
         return redirect(reverse('add_recipe'))
     else:
         recipes = Recipe.objects.all() 
+        search_key = request.GET.get('search')
+        if search_key:
+            recipes = recipes.filter(recipe_name__icontains=search_key)
         return render(request, 'recipe_front.html', context={'recipes': recipes})
+
 
 def delete_recipe(request, id):
     recipe = Recipe.objects.get(id=id)
     recipe.delete()
     return redirect(reverse('add_recipe'))
+
 
 def update_recipe(request, id):
     if request.method == 'POST':
