@@ -17,7 +17,7 @@
         </div>
         <div class="mb-3">
             <img src="{{ recipe.recipe_image.url }}" alt="Current Image" width="150" height="100">
-            <input type="file" name="recipe_image" id="recipe_image" class="form-control mt-1">
+            <input type="file" name="recipe_image" value="{{ recipe.recipe_image }}" id="recipe_image" class="form-control mt-1">
             <small>Leave blank to keep the current image</small>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>

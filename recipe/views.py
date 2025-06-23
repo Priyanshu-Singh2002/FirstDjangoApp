@@ -4,6 +4,7 @@ from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .recipe_db import get_recipes
 
 
 def login_page(request):
@@ -54,13 +55,15 @@ def add_recipe(request):
         name = data.get("recipe_name")
         description = data.get("recipe_description")
         image = request.FILES.get("recipe_image")
+        user = request.user
         # save data to database
         Recipe.objects.create(
-            recipe_name=name, recipe_description=description, recipe_image=image
+            recipe_name=name, recipe_description=description, recipe_image=image, user=user
         )
         return redirect(reverse("add_recipe"))
     else:
-        recipes = Recipe.objects.all()
+        # recipes = Recipe.objects.all()
+        recipes = get_recipes(request.user.id)
         search_key = request.GET.get("search")
         if search_key:
             recipes = recipes.filter(recipe_name__icontains=search_key)
@@ -72,6 +75,7 @@ def delete_recipe(request, id):
     recipe = Recipe.objects.get(id=id)
     recipe.delete()
     return redirect(reverse("add_recipe"))
+
 
 @login_required(login_url="/login/")
 def update_recipe(request, id):
