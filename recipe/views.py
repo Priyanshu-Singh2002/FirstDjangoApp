@@ -79,20 +79,22 @@ def delete_recipe(request, id):
 
 @login_required(login_url="/login/")
 def update_recipe(request, id):
+    recipe = Recipe.objects.get(id=id)
     if request.method == "POST":
         data = request.POST
         name = data.get("recipe_name")
         description = data.get("recipe_description")
-        recipe = Recipe.objects.get(id=id)
-
+        # update recipe
         recipe.recipe_name = name
         recipe.recipe_description = description
 
         if "recipe_image" in request.FILES:
             recipe.recipe_image = request.FILES.get("recipe_image")
+        else:
+            recipe.recipe_image = recipe.recipe_image
 
         recipe.save()
         return redirect(reverse("add_recipe"))
     else:
-        recipe = Recipe.objects.get(id=id)
         return render(request, "update_recipe.html", context={"recipe": recipe})
+    
