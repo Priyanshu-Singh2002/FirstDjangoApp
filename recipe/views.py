@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import login, authenticate, logout
-from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .recipe_db import get_recipes
-
+from django.core.paginator import Paginator
+from .models import *
 
 def login_page(request):
     if request.method == "POST":
@@ -98,3 +98,9 @@ def update_recipe(request, id):
     else:
         return render(request, "update_recipe.html", context={"recipe": recipe})
 
+def get_student(request):
+    students = Student.objects.all()
+    paginator = Paginator(students,10)
+    page_num = request.GET.get('page', 1)
+    data_page = paginator.get_page(page_num)
+    return render(request,'report/student.html', context={"students": data_page})
