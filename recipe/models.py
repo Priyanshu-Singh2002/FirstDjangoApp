@@ -28,7 +28,7 @@ class StudentId(models.Model):
 
 class Student(models.Model):
     department = models.ForeignKey(Department,on_delete=models.CASCADE, related_name='department_students')
-    student_id = models.OneToOneField(StudentId, on_delete=models.CASCADE, primary_key=True)
+    student_id = models.OneToOneField(StudentId, on_delete=models.CASCADE)
     student_name = models.CharField(max_length=100)
     student_email = models.EmailField(unique=True)
     student_phone = models.CharField(max_length=15, unique=True)
@@ -43,3 +43,4 @@ class Student(models.Model):
     class Meta:
         ordering = ['student_name']
         verbose_name = 'student'
+

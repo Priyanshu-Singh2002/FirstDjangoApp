@@ -97,4 +97,4 @@ def update_recipe(request, id):
         return redirect(reverse("add_recipe"))
     else:
         return render(request, "update_recipe.html", context={"recipe": recipe})
-    
+
