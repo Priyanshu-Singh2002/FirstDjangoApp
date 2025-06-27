@@ -6,6 +6,7 @@ from django.contrib import messages
 from .recipe_db import get_recipes
 from django.core.paginator import Paginator
 from .models import *
+from django.db.models import Q
 
 def login_page(request):
     if request.method == "POST":
@@ -100,6 +101,19 @@ def update_recipe(request, id):
 
 def get_student(request):
     students = Student.objects.all()
+
+    if request.GET.get("search"):
+        search_key = request.GET.get("search")
+        students = students.filter(
+            Q(department__department_name__icontains=search_key)|
+            Q(student_name__icontains=search_key)|
+            Q(student_id__student_id__icontains=search_key)|
+            Q(student_email__icontains=search_key)|
+            Q(student_phone__icontains=search_key)|
+            Q(student_age__icontains=search_key)|
+            Q(student_address__icontains=search_key)   
+        )
+
     paginator = Paginator(students,10)
     page_num = request.GET.get('page', 1)
     data_page = paginator.get_page(page_num)
