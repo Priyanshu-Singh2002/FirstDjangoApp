@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/pagination.css' %}">
+
+{% endblock extra_head %}
+
+{% block start %}
+
+<div class="container-fluid bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+     <b> Student-Id => {{student.student_id.student_id}} </b>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <b> Rank => {{report.rank}}</b>
+    </nav>
+</div>
+
+<div class="container mt-4">
+
+    <h3 class="text-center">Student's Report</h3>
+
+    <table class="table table-striped">
+        <thead>
+            <tr class="table-dark">
+                <th class="text-center" scope="col">S.No.</th>
+                <th class="text-center" scope="col">Sujects</th>
+                <th class="text-center" scope="col">Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mark in subj_marks %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{ mark.subject.subject_name }}</td>
+                <td>{{ mark.mark }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock start %}

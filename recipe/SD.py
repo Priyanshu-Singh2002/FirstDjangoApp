@@ -1,6 +1,7 @@
 from faker import Faker
 import random
 from .models import *
+from django.db.models import Sum
 
 fake_obj = Faker()
 
@@ -47,3 +48,36 @@ def create_student_data(n=10)-> None:
     
     except Exception as e:
         print(f"Error creating student data: {e}")
+
+
+def generate_rank_student() -> None:
+    Stud_Det = Student.objects.annotate(total_marks = Sum('marks__mark')).order_by('-total_marks')
+    i = 1
+    for stud in Stud_Det:
+        StudentReportCard.objects.create(
+            student = stud,
+            rank = i,
+            total_marks = stud.total_marks
+        )
+        i = i + 1
+
+    
+def set_report():
+    report = StudentReportCard.objects.all()
+    marks = StudentSubjectMark.objects.all()
+    n = 1
+
+    for r in report:
+        n = 1
+        for m in marks:
+            if (m.student == r.student) and (n <= 4):
+                m.report = r
+                m.save()
+                n = n + 1
+                continue
+            if(n > 4):
+                break
+
+
+
+# student_marks = StudentSubjectMark.objects.filter(student=report.student, report__isnull=True)[:4]

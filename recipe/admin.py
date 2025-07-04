@@ -15,3 +15,6 @@ class SubjectMarksTable(admin.ModelAdmin):
 
 
 admin.site.register(StudentSubjectMark,SubjectMarksTable)
+
+
+admin.site.register(StudentReportCard)

@@ -98,6 +98,8 @@ def update_recipe(request, id):
         return redirect(reverse("add_recipe"))
     else:
         return render(request, "update_recipe.html", context={"recipe": recipe})
+    
+from recipe.SD import *    
 
 def get_student(request):
     students = Student.objects.all()
@@ -118,3 +120,18 @@ def get_student(request):
     page_num = request.GET.get('page', 1)
     data_page = paginator.get_page(page_num)
     return render(request,'report/student.html', context={"students": data_page})
+
+
+def get_student_report(request,id):
+    report = StudentReportCard.objects.filter(student__student_id__student_id = id).first()
+
+    if not report:
+        return render(request, 'report/student_report.html', {'error': 'No report found'})
+    marks = StudentSubjectMark.objects.filter(report = report)
+    
+    context = {
+        'report':report,
+        'student':report.student,
+        'subj_marks' : marks
+    }
+    return render(request,'report/student_report.html',context)

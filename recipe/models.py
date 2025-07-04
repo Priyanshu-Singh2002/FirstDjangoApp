@@ -59,6 +59,7 @@ class StudentSubjectMark(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='marks')
     subject = models.ForeignKey(Subject, on_delete= models.CASCADE)
     mark = models.PositiveIntegerField()
+    report = models.ForeignKey('StudentReportCard', on_delete=models.CASCADE, related_name='subject_marks', null=True, blank=True)
 
     def __str__(self):
         return f'{self.student.student_name} - {self.subject.subject_name}'
@@ -67,3 +68,16 @@ class StudentSubjectMark(models.Model):
         unique_together = ['student', 'subject']
         ordering = ['student__student_name', 'subject__subject_name']
 
+
+class StudentReportCard(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE,related_name='Result')
+    rank = models.PositiveIntegerField()
+    total_marks = models.PositiveIntegerField()
+    date_of_generating = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.student.student_name} - {self.rank}'
+    
+    class Meta:
+        unique_together = ['rank','date_of_generating']
+        ordering = ['student__student_name']
