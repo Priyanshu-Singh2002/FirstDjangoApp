@@ -6,7 +6,6 @@ admin.site.register(Recipe)
 admin.site.register(Department)
 admin.site.register(StudentId)
 admin.site.register(Student)
-
 admin.site.register(Subject)
 
 
@@ -17,4 +16,10 @@ class SubjectMarksTable(admin.ModelAdmin):
 admin.site.register(StudentSubjectMark,SubjectMarksTable)
 
 
-admin.site.register(StudentReportCard)
+class StudentReportFormat(admin.ModelAdmin):
+    ordering = ['-total_marks']
+    list_display = ['student','rank','total_marks','date_of_generating']
+
+    
+
+admin.site.register(StudentReportCard,StudentReportFormat)

@@ -50,16 +50,38 @@ def create_student_data(n=10)-> None:
         print(f"Error creating student data: {e}")
 
 
-def generate_rank_student() -> None:
-    Stud_Det = Student.objects.annotate(total_marks = Sum('marks__mark')).order_by('-total_marks')
-    i = 1
-    for stud in Stud_Det:
+
+def generate_ranks():
+    All_student = Student.objects.all()
+    passed_students = []
+
+     # Check pass/fail for each student
+    for stud in All_student:
+        Smarks = stud.marks.all()
+        has_failed = any(mark.mark < 32 for mark in Smarks)
+
+        if not has_failed:
+            total = sum(mark.mark for mark in Smarks )
+            stud.total_marks = total    # dynamically attach this field & value in memory only
+            passed_students.append(stud)
+        else:
+             StudentReportCard.objects.create(
+                student=stud,
+                total_marks=sum(mark.mark for mark in Smarks),
+                result="FAIL"  # Assuming this field exists
+            )
+        
+    #sort passed students and order them in descending order by total_marks
+    passed_students.sort(key= lambda x : x.total_marks,reverse=True)
+
+    for i, stud in enumerate(passed_students, start=1):
         StudentReportCard.objects.create(
-            student = stud,
-            rank = i,
-            total_marks = stud.total_marks
+            student=stud,
+            rank=i,
+            total_marks=stud.total_marks,
+            result="PASS"  # Assuming this field exists
         )
-        i = i + 1
+
 
     
 def set_report():

@@ -96,10 +96,8 @@ def update_recipe(request, id):
 
         recipe.save()
         return redirect(reverse("add_recipe"))
-    else:
-        return render(request, "update_recipe.html", context={"recipe": recipe})
+    return render(request, "update_recipe.html", context={"recipe": recipe})
     
-from recipe.SD import *    
 
 def get_student(request):
     students = Student.objects.all()

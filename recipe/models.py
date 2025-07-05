@@ -70,14 +70,14 @@ class StudentSubjectMark(models.Model):
 
 
 class StudentReportCard(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE,related_name='Result')
-    rank = models.PositiveIntegerField()
+    student = models.OneToOneField(Student, on_delete=models.CASCADE, related_name='report_card')  # Ensures one report per student
+    rank = models.PositiveIntegerField(null=True, blank=True)
     total_marks = models.PositiveIntegerField()
+    result = models.CharField(max_length=4, null=False, default='pass/fail')
     date_of_generating = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.student.student_name} - {self.rank}'
     
     class Meta:
-        unique_together = ['rank','date_of_generating']
         ordering = ['student__student_name']
