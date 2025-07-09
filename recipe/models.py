@@ -1,5 +1,13 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+# ModelManager for Student model
+class StudentManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_deleted = False)
+
 
 # Create your models here.
 class Recipe(models.Model):
@@ -45,6 +53,13 @@ class Student(models.Model):
     student_age = models.PositiveIntegerField()
     student_address = models.TextField()
 
+
+    # this is used to mark that this object is deleted 
+    is_deleted = models.BooleanField(default=False)
+
+    # swap default model manager with custom model manager
+    objects = StudentManager()
+    objects_admin = models.Manager()
 
     def __str__(self):
         return f"{self.student_name} ({self.student_id})"

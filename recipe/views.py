@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .recipe_db import get_recipes
 from django.core.paginator import Paginator
 from .models import *
 from django.db.models import Q
+
+User = get_user_model()
 
 def login_page(request):
     if request.method == "POST":
