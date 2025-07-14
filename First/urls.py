@@ -26,6 +26,7 @@ from recipe.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',home, name='home'),
+    path('send-email/',Send_a_email,name='Send_a_email'),
     path('about/',about, name = 'about'),
     path('contact/',contact,name='contact'),
     path('recipe/',add_recipe, name='add_recipe'),

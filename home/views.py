@@ -1,5 +1,20 @@
-from django.shortcuts import render
+import os
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from .util import *
+from django.conf import settings
+
+def Send_a_email(request):
+    subject = 'Email With Attachment By Sanu Thapa'
+    message = 'Hey! In this i am attaching a file with it.'
+    recipient_list = ['priyanshuthapa93@gmail.com','djcosty452@gmail.com']
+    FILE_PATH = os.path.join(settings.BASE_DIR,'public','media','Mine.jpg')
+    try:
+        SEND_EMAIL_WITH_FILE(subject,message,recipient_list,FILE_PATH)
+    except Exception as e:
+        print(e)
+    return redirect('/')
+
 
 # Create your views here.
 peoples = [
