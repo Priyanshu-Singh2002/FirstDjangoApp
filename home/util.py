@@ -1,6 +1,6 @@
 from django.core.mail import send_mail,EmailMessage
 from django.conf import settings
-
+from .models import *
 
 
 def SENDING_MAIL():
@@ -18,3 +18,6 @@ def SEND_EMAIL_WITH_FILE(subject,message,recipient_list,FILE_PATH):
     Mail.attach_file(FILE_PATH)
     Mail.send()
 
+
+A = Car.objects.all()
+print(A)

@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .util import *
 from django.conf import settings
+from .models import *
 
 def Send_a_email(request):
     subject = 'Email With Attachment By Sanu Thapa'
@@ -27,6 +28,8 @@ peoples = [
 ]
 
 def home(request):
+    Car.objects.create(name="Wagonr", mileage=80)
+
     context = {'title': 'home | page'}
     return render(request,'home/index.html')
 
