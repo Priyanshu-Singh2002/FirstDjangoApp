@@ -28,7 +28,7 @@ peoples = [
 ]
 
 def home(request):
-    Car.objects.create(name="Wagonr", mileage=80)
+    Car.objects.create(name="Alto", mileage=80)
 
     context = {'title': 'home | page'}
     return render(request,'home/index.html')

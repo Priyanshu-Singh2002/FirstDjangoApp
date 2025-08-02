@@ -18,7 +18,7 @@ class Student(models.Model):
 
 class Car(models.Model):
     name = models.CharField(max_length=50,blank=False,null=False)
-    mileage = models.IntegerField(default=0)
+    mileage = models.IntegerField(default=10)
 
     def __str__(self) -> str:
         return self.name

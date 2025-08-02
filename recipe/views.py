@@ -5,17 +5,17 @@ from django.contrib import messages
 from .recipe_db import get_recipes
 from django.core.paginator import Paginator
 from .models import *
-from django.db.models import Q
+from django.db.models import Q 
 
 User = get_user_model()
 
 def login_page(request):
     if request.method == "POST":
         data = request.POST
-        username = data.get("username")
+        phone = data.get("phone")
         password = data.get("password")
         # authenticate user
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username=phone, password=password)
         if user:
             login(request, user)
             return redirect(reverse("add_recipe"))
@@ -34,6 +34,7 @@ def register(request):
         data = request.POST
         first_name = data.get("first_name")
         last_name = data.get("last_name")
+        phone = data.get("phone")
         username = data.get("username")
         password = data.get("password")
 
@@ -42,7 +43,8 @@ def register(request):
             first_name=first_name,
             last_name=last_name,
             username=username,
-            password=password
+            password=password,
+            phone_number = phone
         )
         return redirect(reverse("login_page"))
     else:

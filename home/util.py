@@ -19,5 +19,6 @@ def SEND_EMAIL_WITH_FILE(subject,message,recipient_list,FILE_PATH):
     Mail.send()
 
 
-A = Car.objects.all()
-print(A)
+def show_cars():
+    A = Car.objects.all()
+    print(A)
